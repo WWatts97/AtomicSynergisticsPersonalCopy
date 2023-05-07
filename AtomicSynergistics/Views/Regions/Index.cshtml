@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AtomicSynergisitcs.DATA.Models.Region>
+
+@{
+    ViewData["Title"] = "Regions";
+}
+
+<h1 class="text-center mb-2 d-flex">Regions</h1>
+
+<p class="d-flex">
+    <a class="btn btn-outline-info" asp-action="Create">Add New Region</a>
+</p>
+<table class="table table-hover table-bordered bg-dark-light1">
+    <thead>
+        <tr>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.RegionName)
+            </th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegionName)
+                </td>
+                <td class="text-center">
+                    <a asp-action="Edit" asp-route-id="@item.RegionId">Edit</a> 
+                    @if (User.IsInRole("Admin"))
+                    {
+
+                        <a asp-action="Delete" asp-route-id="@item.RegionId">| Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script>
+        $('.table').dataTable();
+    </script>
+
+}

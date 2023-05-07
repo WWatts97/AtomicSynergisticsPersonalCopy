@@ -1,0 +1,95 @@
+﻿@model IEnumerable<AtomicSynergisitcs.DATA.Models.Sale>
+
+@{
+    ViewData["Title"] = "Sales";
+}
+
+<h1>Sales</h1>
+
+<p>
+    <a class="btn btn-outline-info" asp-action="Create">Add New Sale</a>
+</p>
+<table class="table table-hover table-bordered bg-dark-light1">
+    <thead>
+        <tr>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.SaleId)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.SaleDate)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.SaleTotal)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Salesperson)
+            </th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.SaleId">@Html.DisplayFor(modelItem => item.SaleId)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaleDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaleTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salesperson.FullName)
+                </td>
+                <td class="text-center">
+                    <a asp-action="Edit" asp-route-id="@item.SaleId">Edit</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+
+                        <a asp-action="Delete" asp-route-id="@item.SaleId">| Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script>
+        $('.table').dataTable({
+
+            dom: 'lBfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: 'Excel',
+                    text: 'Export to excel',
+                    className: 'btn'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'PDF',
+                    text: 'Export to PDF',
+                    className: 'btn'
+                }
+            ]
+        });
+    </script>
+    <script>
+        $('.dt-buttons').addClass('ml-3').addClass('mb-1');
+    </script>
+}

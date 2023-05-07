@@ -1,0 +1,90 @@
+﻿@model IEnumerable<AtomicSynergisitcs.DATA.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+
+<h1 class="text-center mb-2 d-flex">Products</h1>
+<p class="d-flex">
+    <a class="btn btn-outline-info" asp-action="Create">Add New Product</a>
+</p>
+<table class="table table-hover table-bordered bg-dark-light1">
+    <thead>
+        <tr>
+            <th class="text-center">
+                
+                @Html.DisplayNameFor(model => model.ProductName)
+                </a>
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.CostPerUnit)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.PricePerUnit)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.UnitsInStock)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.UnitsOnOrder)
+            </th>
+            <th class="text-center">
+                Product Status
+            </th>
+            <th class="text-center">
+               Product Type
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Vendor)
+            </th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+            <a asp-action="Details" asp-route-id="@item.ProductId" >@Html.DisplayFor(modelItem => item.ProductName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostPerUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PricePerUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitsInStock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitsOnOrder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductStatus.ProductStatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductType.ProductTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendor.VendorName)
+            </td>
+            <td class="text-center">
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> 
+                @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.ProductId">| Delete</a>
+                        
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script>
+        $('.table').dataTable();
+    </script>
+    
+}
